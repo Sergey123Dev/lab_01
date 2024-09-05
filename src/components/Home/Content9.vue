@@ -1,31 +1,33 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 
-const isVisible = ref(true);
+// 2. computed() з реальним використанням: Фільтрація списку товарів
+// Реактивний список товарів
+const products = ref([
+  { name: 'Ноутбук', price: 1500 },
+  { name: 'Телефон', price: 800 },
+  { name: 'Навушники', price: 150 },
+]);
 
-const toggleVisibility = () => {
-  isVisible.value = !isVisible.value;
-};
+// Реактивний пошуковий запит
+const searchQuery = ref('');
+
+// Обчислюване значення для фільтрації
+const filteredProducts = computed(() => {
+  return products.value.filter(product =>
+      product.name.toLowerCase().includes(searchQuery.value.toLowerCase())
+  );
+});
 </script>
 
 <template>
   <div>
-    <h2>Приклад використання v-if / v-else</h2>
-    <button @click="toggleVisibility">
-      {{ isVisible ? 'Сховати' : 'Показати' }} повідомлення
-    </button>
-    <p v-if="isVisible">Це повідомлення відображається!</p>
-    <p v-else>Повідомлення сховане.</p>
+    <h2>Фільтрація товарів</h2>
+    <input v-model="searchQuery" placeholder="Пошук товарів..." />
+    <ul>
+      <li v-for="product in filteredProducts" :key="product.name">
+        {{ product.name }} - ${{ product.price }}
+      </li>
+    </ul>
   </div>
 </template>
-
-<style scoped>
-button {
-  padding: 0.5rem 1rem;
-  margin-top: 1rem;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  cursor: pointer;
-}
-</style>

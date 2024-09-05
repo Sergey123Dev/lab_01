@@ -1,31 +1,28 @@
 <script setup>
-import { ref } from 'vue';
+import { reactive, watch } from 'vue';
 
-const isVisible = ref(true);
+//6. watch() з реальним використанням: Відстеження змін у реактивному об'єкті
+// Реактивний об'єкт для форми
+const form = reactive({
+  name: '',
+  email: '',
+});
 
-const toggleVisibility = () => {
-  isVisible.value = !isVisible.value;
-};
+// Відстеження змін у формі
+watch(() => form, (newForm, oldForm) => {
+  console.log('Зміни в формі:', newForm);
+}, { deep: true });
 </script>
 
 <template>
   <div>
-    <h2>Приклад використання v-if / v-else</h2>
-    <button @click="toggleVisibility">
-      {{ isVisible ? 'Сховати' : 'Показати' }} повідомлення
-    </button>
-    <p v-if="isVisible">Це повідомлення відображається!</p>
-    <p v-else>Повідомлення сховане.</p>
+    <h2>Відстеження змін у формі</h2>
+    <form>
+      <label>Ім'я</label>
+      <input v-model="form.name" />
+
+      <label>Електронна пошта</label>
+      <input v-model="form.email" />
+    </form>
   </div>
 </template>
-
-<style scoped>
-button {
-  padding: 0.5rem 1rem;
-  margin-top: 1rem;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  cursor: pointer;
-}
-</style>

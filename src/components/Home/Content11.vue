@@ -1,31 +1,30 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, watchEffect } from 'vue';
 
-const isVisible = ref(true);
+//5. watchEffect() з реальним використанням: Відстеження розмірів вікна
+// Створюємо реактивні змінні для висоти та ширини
+const windowWidth = ref(window.innerWidth);
+const windowHeight = ref(window.innerHeight);
 
-const toggleVisibility = () => {
-  isVisible.value = !isVisible.value;
-};
+// Використовуємо watchEffect для відстеження зміни розміру вікна
+watchEffect(() => {
+  const updateWindowSize = () => {
+    windowWidth.value = window.innerWidth;
+    windowHeight.value = window.innerHeight;
+  };
+  window.addEventListener('resize', updateWindowSize);
+
+  // Очищення, коли компонент демонтується
+  return () => {
+    window.removeEventListener('resize', updateWindowSize);
+  };
+});
 </script>
 
 <template>
   <div>
-    <h2>Приклад використання v-if / v-else</h2>
-    <button @click="toggleVisibility">
-      {{ isVisible ? 'Сховати' : 'Показати' }} повідомлення
-    </button>
-    <p v-if="isVisible">Це повідомлення відображається!</p>
-    <p v-else>Повідомлення сховане.</p>
+    <h2>Розмір вікна</h2>
+    <p>Ширина: {{ windowWidth }} px</p>
+    <p>Висота: {{ windowHeight }} px</p>
   </div>
 </template>
-
-<style scoped>
-button {
-  padding: 0.5rem 1rem;
-  margin-top: 1rem;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  cursor: pointer;
-}
-</style>
