@@ -1,69 +1,80 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+import { RouterView, RouterLink } from 'vue-router'
 </script>
 
 <template>
-  <header>
-    <nav>
-      <RouterLink to="/">Home</RouterLink>
-      <RouterLink to="/about">About</RouterLink>
-    </nav>
-  </header>
+  <div class="layout">
+    <!-- Ліве бокове меню -->
+    <aside class="sidebar">
+      <img src="https://vuejs.org/images/logo.png" alt="Vue.js" class="logo" />
+      <h1 class="lecture-title">Лекція 1 - Vue.js</h1>
 
-  <RouterView />
+      <!-- Навігація -->
+      <nav>
+        <RouterLink to="/" class="menu-link">Приклади</RouterLink>
+      </nav>
+    </aside>
+
+    <!-- Контент роута -->
+    <main class="content">
+      <RouterView />
+    </main>
+  </div>
 </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
+/* Макет сторінки */
+.layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Ліва панель (меню) */
+.sidebar {
+  background-color: rgba(9, 17, 21, 0.94);
+  color: white;
+  width: 220px;
+  padding: 2rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
 }
 
 .logo {
-  display: block;
-  margin: 0 auto 2rem;
+  width: 80px;
+  margin-bottom: 1.5rem;
 }
 
+.lecture-title {
+  font-size: 1.4rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  font-weight: bold;
+}
+
+/* Навігація (меню) */
 nav {
   width: 100%;
-  font-size: 12px;
+}
+
+.menu-link {
+  display: block;
+  padding: 1rem;
   text-align: center;
-  margin-top: 2rem;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
 }
 
-nav a.router-link-exact-active {
-  color: var(--color-text);
+.menu-link:hover {
+  background-color: #35495e;
 }
 
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
+/* Контентна частина */
+.content {
+  flex-grow: 1;
+  background-color: #f9f9f9;
 }
 </style>

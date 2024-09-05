@@ -1,4 +1,4 @@
-<script setup>
+23.vue<script setup>
 // Функція для генерації випадкового кольору
 const getRandomColor = () => {
   const letters = '0123456789ABCDEF';
